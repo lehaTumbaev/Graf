@@ -4,7 +4,6 @@ import org.telegram.telegrambots.bots.TelegramWebhookBot;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 public class GrafTelegramBot extends TelegramWebhookBot {
 
@@ -12,19 +11,26 @@ public class GrafTelegramBot extends TelegramWebhookBot {
    private String botUsername;
    private String botToken;
 
+   //метод, срабатывающий при обращении к боту
     @Override
     public BotApiMethod<?> onWebhookUpdateReceived(Update update) {
-        if (update.getMessage() != null && update.getMessage().hasText()) {
-            String chat_id = String.valueOf(update.getMessage().getChatId());
+        //если сообщение без текста или равно null, ничего не делаем
+        if (update.getMessage() == null || !update.getMessage().hasText()) return null;
 
-            try{
-                execute(new SendMessage(chat_id, "Hi " + update.getMessage().getText()));
-            }catch (TelegramApiException e) {
-                e.printStackTrace();
-            }
-        }
-        return null;
+        String chatId = String.valueOf(update.getMessage().getChatId()); //получаем id чата из сообщения
+
+        //при вводе команды /start просим ввести материал
+        if (update.getMessage().getText().startsWith("/start"))
+            return ((new SendMessage(chatId, "Введите название стройматериала.")));
+
+        return ((new SendMessage(chatId, findBuildingMaterials()))); //вызываем метод поиска материалов
     }
+
+    //метод для поиска материалов
+    private String findBuildingMaterials() {
+        return "куку";
+    }
+
 
     @Override
     public String getBotUsername() {
