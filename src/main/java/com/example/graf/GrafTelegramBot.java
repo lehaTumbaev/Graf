@@ -23,6 +23,9 @@ public class GrafTelegramBot extends TelegramWebhookBot {
         if (update.getMessage().getText().startsWith("/start"))
             return ((new SendMessage(chatId, "Введите название стройматериала.")));
 
+
+
+
         return ((new SendMessage(chatId, findBuildingMaterials()))); //вызываем метод поиска материалов
     }
 
