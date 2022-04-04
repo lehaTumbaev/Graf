@@ -15,6 +15,7 @@ public class BotConfig {
     @Bean
     public GrafTelegramBot grafTelegramBot() {
 
+
         GrafTelegramBot grafTelegramBot = new GrafTelegramBot();
         grafTelegramBot.setBotPath(botPath);
         grafTelegramBot.setBotToken(botToken);
